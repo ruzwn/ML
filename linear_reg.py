@@ -12,7 +12,8 @@ class LinearRegression:
 
 
     def predict(self, inputs: np.ndarray) -> np.ndarray:
-        return self._calc_predictions(inputs)
+        plan_matrix = self._calc_plan_matrix(inputs)
+        return self._calc_predictions(plan_matrix)
 
     
     def train(self, inputs: np.ndarray, targets: np.ndarray, train_normal_eq: bool) -> None:
@@ -31,7 +32,7 @@ class LinearRegression:
     def _train_grad(self, inputs: np.ndarray, targets: np.ndarray) -> None:
         plan_matrix = self._calc_plan_matrix(inputs)
         for e in range(self.epochs_cnt):
-            grad = self._calc_grad(inputs, targets)
+            grad = self._calc_grad(plan_matrix, targets)
             self.weights = self.weights - self.lr * grad
 
             if e % 10 == 0:
